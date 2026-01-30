@@ -34,6 +34,7 @@ The current state is a Proof of Concept, some functionality is in an early state
 
 - [x] ✅ usable working concept 
 - [ ] 🔬 add significant test coverage
+- [ ] 🐋 use a docker container to install LaTeX
 - [ ] 💸 support different countries and currencies than Germany and Euro
 - [ ] 💬 compliant AI integration to assess data 
 
