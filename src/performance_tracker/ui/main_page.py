@@ -160,7 +160,8 @@ def render_main_page() -> None:
     left_col, middle_col, right_col = st.columns([1, 3, 1], gap="medium")
 
     left_col.subheader(INTRO_TEXT)
-    middle_col.subheader("Enter stock portfolio or upload it as CSV")
+    middle_col.subheader("Enter stock portfolio, or upload it as CSV")
+
     right_col.subheader("Start analysis")
 
     if "shared_data" not in st.session_state:
