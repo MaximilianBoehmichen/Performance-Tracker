@@ -1,0 +1,46 @@
+name: coverage
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
+
+      - name: Python Set up
+        run: uv python install 3.13
+
+      - name: Dependencies
+        run: uv sync --all-extras --dev
+
+      - name: Run tests and coverage
+        run: |
+          uv run coverage run --source=src -m unittest discover -s tests
+
+      - name: Report coverage
+        run: |
+          uv run coverage report
+
+      - name: badge
+        run: |
+          uv run coverage-badge -o coverage.svg
+
+      - name: Upload badge
+        uses: exuanbo/actions-deploy-gist@v1
+        with:
+          token: ${{ secrets.GIST_TOKEN }}
+          gist_id: ${{ secrets.GIST_ID }}
+          file_path: coverage.svg
+          gist_file_name: coverage.svg
+          file_type: 'text'
