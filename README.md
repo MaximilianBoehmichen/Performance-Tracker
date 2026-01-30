@@ -43,7 +43,7 @@ The current state is a Proof of Concept, some functionality is in an early state
 > Financial Data is accessed from yfinance and Worldbank. The Yahoo! finance API is intended for personal use only. Any data may not be redistributed. Performance-Tracker is an open-source tool and is not affiliated with, endorsed by, or vetted by Yahoo, Inc.. 
 
 > [!CAUTION]
-> **Performance Tracker** does not provide financial advice. The utilized data is not guaranteed to be complete or correct!
+> **Performance-Tracker** does not provide financial advice. The utilized data is not guaranteed to be complete or correct!
 
 ---
 
