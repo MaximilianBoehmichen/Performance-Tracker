@@ -1,6 +1,6 @@
 # Performance-Tracker
 
-![Python](https://img.shields.io/badge/python-3.13-blue.svg) [![Unittests](https://github.com/MaximilianBoehmichen/Performance-Tracker/actions/workflows/unittests.yml/badge.svg?branch=main)](https://github.com/MaximilianBoehmichen/Performance-Tracker/actions/workflows/unittests.yml) ![Coverage](https://gist.github.com/MaximilianBoehmichen/c887ead53040ed5fa8a434422d511013/raw/coverage.svg)
+![Python](https://img.shields.io/badge/python-3.13-blue.svg) [![Unittests](https://github.com/MaximilianBoehmichen/Performance-Tracker/actions/workflows/unittests.yml/badge.svg?branch=main)](https://github.com/MaximilianBoehmichen/Performance-Tracker/actions/workflows/unittests.yml) ![Coverage](https://gist.githubusercontent.com/MaximilianBoehmichen/c887ead53040ed5fa8a434422d511013/raw/coverage.svg?sanitize=true)
 
 The **Performance Tracker** is a MSCI World ETF advocate. Compare individual stocks against a local ETF and inflation, but adjusted for different currencies and dividends. This is intended for research and educational use only. The output may not be redistributed, according to Yahoo! finance API TOS!
 
