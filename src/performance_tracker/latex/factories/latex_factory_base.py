@@ -30,7 +30,7 @@ class LaTeXFactoryBase(ABC):
         :param exchanger:
         :param configdict: configdict of input
         """
-        pass
+        ...
 
     def __call__(self, **kwargs) -> str:
         return self.generate(**kwargs)
