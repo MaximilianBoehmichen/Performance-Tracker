@@ -6,8 +6,6 @@ from yfinance import Ticker
 from performance_tracker.latex.factories.latex_factory_base import LaTeXFactoryBase
 from performance_tracker.services.exchange_rate import ExchangeRateService
 from performance_tracker.services.inflation import InflationService
-from performance_tracker.services.ticker import get_tickers
-from performance_tracker.utils.join import join_all_df
 from performance_tracker.utils.maps import currency_to_latex_symbol
 
 
@@ -111,54 +109,3 @@ class PriceTargetFactory(LaTeXFactoryBase):
                 \node[below] at ({target - offset}, -0.1) {{ \textcolor{{{colour}}}{{ {text} }} }};
             """)
         return draw
-
-
-if __name__ == "__main__":
-    import pandas as pd
-
-    config_dict = {
-        "currency": "EUR",
-        "country": "DEU",
-        "period": "10y",
-    }
-
-    pd.set_option("display.max_rows", None)
-    pd.set_option("display.max_columns", None)
-    pd.set_option("display.width", 250)
-
-    cgf = PriceTargetFactory()
-
-    ticker = get_tickers(names="SAP.DE")[0]
-
-    comparison_ticker: Ticker = get_tickers(names="EUNL.DE")[0]
-    inflation_service = InflationService()
-    exchanger = ExchangeRateService()
-    combined_df = join_all_df(
-        comparison_ticker.info.get("currency"),
-        comparison_ticker,
-        config_dict,
-        ticker.info.get("currency"),
-        exchanger,
-        inflation_service,
-        ticker,
-        "EUR",
-    )
-
-    ret = cgf.generate(
-        ticker_info={
-            "symbol": "SAP.DE",
-            "quantity": 2,
-            "buy_date": "",
-            "sell_date": "",
-            "buy_price": 0,
-            "sell_price": 0,
-        },
-        combined_df=combined_df,
-        ticker=ticker,
-        comparison_ticker=comparison_ticker,
-        inflation_service=inflation_service,
-        exchanger=exchanger,
-        configdict=config_dict,
-    )
-
-    print(ret)

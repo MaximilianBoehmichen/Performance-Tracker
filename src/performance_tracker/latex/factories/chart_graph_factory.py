@@ -7,9 +7,7 @@ from yfinance import Ticker
 from performance_tracker.latex.factories.latex_factory_base import LaTeXFactoryBase
 from performance_tracker.services.exchange_rate import ExchangeRateService
 from performance_tracker.services.inflation import InflationService
-from performance_tracker.services.ticker import get_tickers
 from performance_tracker.utils.calc_df import total_minmax
-from performance_tracker.utils.join import join_all_df
 from performance_tracker.utils.maps import currency_to_latex_symbol
 
 BASE_LEVEL = 100
@@ -154,6 +152,8 @@ class ChartGraphFactory(LaTeXFactoryBase):
         if df.empty or not isinstance(df.index, pd.DatetimeIndex):
             return ""
 
+        start_date = pd.Timestamp(start_date)
+
         tick_dates = (
             df.index[df.index >= start_date.tz_localize(df.index.tz)]
             .strftime("%Y-%m-%d")
@@ -180,54 +180,3 @@ class ChartGraphFactory(LaTeXFactoryBase):
             return rf"\textcolor{{green!70!black}}{{ \textbf{{ +{last_performance - BASE_LEVEL:.2f}\% }}}}"
         else:
             return rf"\textcolor{{red!70!black}}{{ \textbf{{ -{BASE_LEVEL - last_performance:.2f}\% }}}}"
-
-
-if __name__ == "__main__":
-    import pandas as pd
-
-    config_dict = {
-        "currency": "EUR",
-        "country": "DEU",
-        "period": "10y",
-    }
-
-    pd.set_option("display.max_rows", None)
-    pd.set_option("display.max_columns", None)
-    pd.set_option("display.width", 250)
-
-    cgf = ChartGraphFactory()
-
-    ticker = get_tickers(names="SAP.DE")[0]
-
-    comparison_ticker: Ticker = get_tickers(names="EUNL.DE")[0]
-    inflation_service = InflationService()
-    exchanger = ExchangeRateService()
-    combined_df = join_all_df(
-        comparison_ticker.info.get("currency"),
-        comparison_ticker,
-        config_dict,
-        ticker.info.get("currency"),
-        exchanger,
-        inflation_service,
-        ticker,
-        "EUR",
-    )
-
-    ret = cgf.generate(
-        ticker_info={
-            "symbol": "SAP.DE",
-            "quantity": 2,
-            "buy_date": "",
-            "sell_date": "",
-            "buy_price": 0,
-            "sell_price": 0,
-        },
-        combined_df=combined_df,
-        ticker=ticker,
-        comparison_ticker=comparison_ticker,
-        inflation_service=inflation_service,
-        exchanger=exchanger,
-        configdict=config_dict,
-    )
-
-    print(ret)

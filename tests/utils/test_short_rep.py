@@ -24,18 +24,19 @@ class TestShortRep(unittest.TestCase):
         self.assertEqual(short_rep(110000), "110k")
 
     def test_millions(self) -> None:
-        self.assertEqual(short_rep(1_200_000), "1.20M")
+        self.assertEqual(short_rep(1_200_000.00), "1.20M")
         self.assertEqual(short_rep(12_000_000), "12.0M")
         self.assertEqual(short_rep(120_000_000), "120M")
 
     def test_billions(self) -> None:
         self.assertEqual(short_rep(5_020_000_000), "5.02B")
         self.assertEqual(short_rep(12_300_000_000), "12.3B")
-        self.assertEqual(short_rep(999_000_000_000), "999B")
+        self.assertEqual(short_rep(999_000_000_000.253), "999B")
 
     def test_trillions(self) -> None:
         self.assertEqual(short_rep(4_000_000_000_000), "4.00T")
         self.assertEqual(short_rep(40_000_000_000_000), "40.0T")
 
-    def test_infinity(self) -> None:
+    def test_infinity_and_small(self) -> None:
         self.assertEqual(short_rep(-float("inf")), "-INF")
+        self.assertEqual(short_rep(0.456), "0.46")
